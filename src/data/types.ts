@@ -6,7 +6,8 @@ export type PropertyType = {
   amenities: number[]
   address: string
   images: string[]
-  price: number
+  price: number,
+  rating: number
 }
 
 export type AmenitiesType = {
