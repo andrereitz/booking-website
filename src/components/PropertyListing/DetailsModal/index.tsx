@@ -1,17 +1,11 @@
 import { ImageCover } from "@/components/shared";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Button } from "@/components/ui/button";
 import { PROPERTIES } from "@/data/properties";
-import { CalendarFold, HomeIcon, InfoIcon, XIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
-import { useEffect, useState } from "react";
-import { DateRange } from "react-day-picker";
-import { addDays, intervalToDuration } from "date-fns";
-import { SidebarItem } from "./DetailsModalSidebar/SidebarItem";
-import { formatCurrency } from "@/helpers/formatters";
+import { AMENITIES } from "@/data/amenities";
+import { BuildingIcon, HomeIcon, TentTreeIcon } from "lucide-react";
 import { DetailsModalHeader } from "./DetailsModalHeader";
 import { DetailsModalSidebar } from "./DetailsModalSidebar";
-import { RatingStars } from "../shared/RatingStars";
+import { RatingStars } from "../../shared/RatingStars";
 
 export const DetailsModal = ({
   id,
@@ -22,17 +16,12 @@ export const DetailsModal = ({
 }) => {
   if(!id) return
 
-  // const initialRange: DateRange = {
-  //   from: new Date(),
-  //   to: addDays(new Date(), 3)
-  // }
-
   const property = PROPERTIES.filter(property => property.id === id)[0] || null;
   
   return(
-    <div className="fixed inset-0 bg-white flex flex-col text-slate-800 shadow-sm">
+    <div className="fixed inset-0 bg-white flex flex-col text-slate-800">
       <DetailsModalHeader title={property.title} onClose={onClose} />
-      <div className="overflow-y-auto">
+      <div className="overflow-y-auto pb-4">
         <div className="container flex gap-4 pt-4">
           <div className="w-full">
             <div>
@@ -57,16 +46,29 @@ export const DetailsModal = ({
               <RatingStars rating={property.rating} />
             </div>
             <div className="mt-4 text-slate-700">
-              <h3 className="text-xl flex items-center gap-2 mb-2"><HomeIcon size={22} /> {property.tagline}</h3>
+              <h3 className="text-xl flex items-center gap-2 mt-5 mb-2 pb-2 border-b-slate-300 border-b"><HomeIcon size={22} /> {property.tagline}</h3>
               <p className="text-lg">
                 {property.description}
               </p>
             </div>
-            <div className="h-[1000px]">
-              text example
+            <div className="mt-4 text-slate-700">
+              <h3 className="text-xl flex items-center gap-2 mt-5 mb-3 pb-2 border-b-slate-300 border-b"><BuildingIcon size={22} /> Ameneties </h3>
+              <p className="text-lg grid grid-cols-1 md:grid-cols-2">
+                {AMENITIES.map((am) => {
+                  const { Icon } = am;
+                  return (
+                    <div className="flex gap-3">
+                      {Icon && (
+                        <Icon />
+                      )}
+                      {am.title}
+                    </div>
+                  )
+                })}
+              </p>
             </div>
           </div>
-          <DetailsModalSidebar price={property.price} />
+          <DetailsModalSidebar price={property.price} id={property.id} onClose={onClose} />
         </div>
       </div>
     </div>

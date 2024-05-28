@@ -1,3 +1,5 @@
+import { ComponentType } from "react"
+
 export type PropertyType = {
   id: number
   title: string
@@ -12,5 +14,6 @@ export type PropertyType = {
 
 export type AmenitiesType = {
   id: number
-  title: string
+  title: string,
+  Icon?: ComponentType
 }
