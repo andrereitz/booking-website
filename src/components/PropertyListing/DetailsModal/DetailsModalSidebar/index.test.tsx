@@ -38,12 +38,8 @@ describe('renders DetailsModal correctly', () => {
 
     vi.spyOn(React, 'useState').mockImplementation(() => [mockState, mockSetState]);
 
-    screen.debug()
-
     const reservationButton = screen.getByText('Make Reservation')
     fireEvent.click(reservationButton)
-
-    screen.debug()
 
     act(() => {
       result.current.addBooking(2, 200, '2024-10-20', '2024-10-25')

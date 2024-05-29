@@ -3,7 +3,7 @@ import { expect, vi } from 'vitest';
 
 import { DetailsModalHeader } from './DetailsModalHeader';
 
-describe('renders DetailsModalHeader correctly', () => {
+describe('DetailsModalHeader renders correctly', () => {
   it('should render title', () => {
     render(<DetailsModalHeader title="test title" onClose={ () => true } />);
 

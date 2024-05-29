@@ -39,9 +39,10 @@ export const useBooking = () => {
     return 'Property booked sucessfully';
   }
 
-  async function deleteBooking(key: string, value: unknown) {
+  async function deleteBooking(id: number) {
+    setBookings(prev => prev.filter(booking => booking.id !== id))
 
-    return null;
+    return 'Deleted sucessfully';
   }
   
   return {
