@@ -1,7 +1,11 @@
 import { useBooking } from "@/hooks/useBookingContext";
 import { Button } from "@/components/ui/button";
 
-export const BookingIndicator = () => {
+export const BookingIndicator = ({
+  onManage
+} : {
+  onManage: () => void
+}) => {
   const { bookings } = useBooking();
 
   if(bookings.length === 0) return;
@@ -15,6 +19,7 @@ export const BookingIndicator = () => {
         <Button 
           variant="outline"
           className="bg-transparent text-white"
+          onClick={onManage}
         >
           Manage
         </Button>

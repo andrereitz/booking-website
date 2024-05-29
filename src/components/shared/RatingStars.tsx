@@ -21,7 +21,7 @@ export const RatingStars = ({
       {decimals > 0 && decimals <= 50 && (
         <>
           <StarHalf size={size} />
-          <StarHalf className={`scale-x scale-x-[-1] opacity-50 ml-[-${size}px]`} size={size} />
+          <StarHalf className={`scale-x scale-x-[-1] opacity-40`} size={size} style={{ marginLeft: `-${size}px` }} />
         </>
       )}
       {decimals > 0 && decimals >= 50 && (

@@ -6,8 +6,12 @@ import { BookingIndicator } from '@/components/BookingIndicator';
 import { PropertyListing } from '@/components/PropertyListing';
 
 import { ToastContainer } from 'react-toastify';
+import { ManageBookingsModal } from './components/ManageBookingsModal';
+import { useState } from 'react';
 
 function App() {
+  const [manageModalOpen, setManageModalOpen] = useState<boolean>(false)
+
   return (
     <>
       <div className="w-full py-4">
@@ -18,7 +22,8 @@ function App() {
             </span>
         </h1>
       </div>
-      <BookingIndicator />
+      <BookingIndicator onManage={() => setManageModalOpen(true)} />
+      <ManageBookingsModal open={manageModalOpen} onClose={() => setManageModalOpen(false)} />
       <PropertyListing />
       <ToastContainer autoClose={3000} position="bottom-right" theme='colored' />
     </>

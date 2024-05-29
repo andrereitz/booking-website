@@ -2,8 +2,6 @@ import { checkDateInterval } from "@/helpers/date";
 import { Booking } from "@/types";
 import { Dispatch, PropsWithChildren, SetStateAction, createContext, useContext, useMemo, useState } from "react";
 
-export type BookingContextValues = Booking[]
-
 type BookingDispatch = Dispatch<SetStateAction<Booking[]>>;
 export type BookingContextType = [Booking[], BookingDispatch];
 
@@ -18,18 +16,19 @@ export const useBooking = () => {
 
   const [bookings, setBookings] = context;
 
-  async function addBooking(propertyID: number, from: string, to: string): Promise<unknown> {
+  async function addBooking(propertyID: number, total: number, from: string, to: string): Promise<unknown> {
     console.log(propertyID, from, to)
 
     const newBooking: Booking = {
       id: new Date().getTime(),
       property: propertyID,
-      dateFrom: from,
-      dateTo: to
+      from: from,
+      to: to,
+      total
     }
 
     bookings.map(booking => {
-      const isOverlapping = checkDateInterval(booking.dateFrom, booking.dateTo, from, to)
+      const isOverlapping = checkDateInterval(booking.from, booking.to, from, to)
 
       if(isOverlapping) {
         throw 'Your already have a booking in this date'
@@ -53,8 +52,8 @@ export const useBooking = () => {
 }
 
 export const BookingContextProvider = ({ children } : {} & PropsWithChildren) => {
-  const [state, setState] = useState<BookingContextValues>([]);
-  const contextValue: [BookingContextValues, BookingDispatch] = useMemo(() => [state, setState], [state]);
+  const [state, setState] = useState<Booking[]>([]);
+  const contextValue: [Booking[], BookingDispatch] = useMemo(() => [state, setState], [state]);
 
   return <BookingContext.Provider value={contextValue}>{children}</BookingContext.Provider>
 }

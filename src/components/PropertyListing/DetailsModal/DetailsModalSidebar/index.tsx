@@ -3,7 +3,7 @@ import { SidebarItem } from "./SidebarItem"
 import { Button } from "@/components/ui/button"
 import { formatCurrency, getBaseDate } from "@/helpers/formatters"
 import { CalendarFold, InfoIcon } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useMemo, useState } from "react"
 import { intervalToDuration } from "date-fns"
 import { DateRange } from "react-day-picker"
 import { useBooking } from "@/hooks/useBookingContext"
@@ -20,29 +20,20 @@ export const DetailsModalSidebar = ({
   onClose: () => void
 }) => {
   const [date, setDate] = useState<DateRange | undefined>(undefined)
-  const [duration, setDuration] = useState<number | null>(null)
   const { addBooking, bookings } = useBooking()
 
   console.log('### bookings', bookings)
 
-  function onDateChange(): void {
-    if(!date || !date.from || !date.to) return setDuration(null);
+  const duration = useMemo<number | undefined>(() => {
+    if(!date || !date.from || !date.to) return undefined;
 
-    console.log(date)
-    
-    const duration = intervalToDuration({ start: new Date(date?.from), end: new Date(date?.to) })
+    return intervalToDuration({ start: new Date(date?.from), end: new Date(date?.to) }).days
+  }, [date])
 
-    if(!duration.days) {
-      return setDuration(null);
-    }
+  const total = useMemo<number>(() => {
+    if (!duration) return 0;
 
-    return setDuration(duration.days);
-  }
-
-  useEffect(() => {
-    const nights = onDateChange()
-
-    console.log(nights)
+    return (price * duration) + getServiceFee(price * duration);
   }, [date])
 
   async function makeReservation() {
@@ -52,7 +43,7 @@ export const DetailsModalSidebar = ({
     const baseTo = getBaseDate(date?.to.toDateString());
 
     try {
-      const booking = await addBooking(id, baseFrom, baseTo)
+      const booking = await addBooking(id, total, baseFrom, baseTo)
 
       toast(String(booking), { type: "success" })
       onClose();
@@ -91,7 +82,7 @@ export const DetailsModalSidebar = ({
               Service fee: {formatCurrency(getServiceFee(price * duration))}
             </span>
             <span className="border-t pt-1 mt-1">
-              Total: {formatCurrency((price * duration) + getServiceFee(price * duration))}
+              Total: {formatCurrency(total)}
             </span>
           </>
         )}

@@ -1,7 +1,7 @@
 import { PropertyType } from "@/data/types"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { formatCurrency } from "@/helpers/formatters"
-import { ImageCover } from "@/components/shared"
+import { ImageCover, RatingStars } from "@/components/shared"
 
 export const PropertyCard = ({ 
   data,
@@ -19,9 +19,14 @@ export const PropertyCard = ({
         <span className='whitespace-nowrap overflow-hidden text-ellipsis pt-2 font-bold'>
           {data.title}
         </span>
-        <span>
-          {formatCurrency(data.price)} night
-        </span>
+        <div className="flex justify-between">
+          <span>
+            {formatCurrency(data.price)} night
+          </span>
+          <span>
+            <RatingStars rating={data.rating} showNumber={false} size={18} />
+          </span>
+        </div>
       </div>
     </div>
   )

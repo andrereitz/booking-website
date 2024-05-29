@@ -1,11 +1,10 @@
-import { ImageCover } from "@/components/shared";
+import { ImageCover, RatingStars } from "@/components/shared";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { PROPERTIES } from "@/data/properties";
 import { AMENITIES } from "@/data/amenities";
-import { BuildingIcon, HomeIcon, TentTreeIcon } from "lucide-react";
+import { BuildingIcon, HomeIcon } from "lucide-react";
 import { DetailsModalHeader } from "./DetailsModalHeader";
 import { DetailsModalSidebar } from "./DetailsModalSidebar";
-import { RatingStars } from "../../shared/RatingStars";
 
 export const DetailsModal = ({
   id,
@@ -53,11 +52,11 @@ export const DetailsModal = ({
             </div>
             <div className="mt-4 text-slate-700">
               <h3 className="text-xl flex items-center gap-2 mt-5 mb-3 pb-2 border-b-slate-300 border-b"><BuildingIcon size={22} /> Ameneties </h3>
-              <p className="text-lg grid grid-cols-1 md:grid-cols-2">
+              <div className="text-lg grid grid-cols-1 md:grid-cols-2">
                 {AMENITIES.map((am) => {
                   const { Icon } = am;
                   return (
-                    <div className="flex gap-3">
+                    <div key={`am-${am.id}`} className={`flex gap-3 ${property.amenities.includes(am.id) ? '' : 'line-through text-slate-400'}`}>
                       {Icon && (
                         <Icon />
                       )}
@@ -65,7 +64,7 @@ export const DetailsModal = ({
                     </div>
                   )
                 })}
-              </p>
+              </div>
             </div>
           </div>
           <DetailsModalSidebar price={property.price} id={property.id} onClose={onClose} />
