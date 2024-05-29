@@ -13,7 +13,7 @@ export const DetailsModalHeader = ({
       <h2 className="overflow-hidden overflow-ellipsis text-lg font-bold pl-2 whitespace-nowrap">
         {title}
       </h2>
-      <Button variant={"ghost"} onClick={onClose} className="ml-auto" >
+      <Button variant={"ghost"} onClick={onClose} className="ml-auto" data-testid="close-button">
         <XIcon />
       </Button>
     </div>

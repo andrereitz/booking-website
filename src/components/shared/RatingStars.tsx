@@ -31,7 +31,7 @@ export const RatingStars = ({
       )}
       {offsetArray.map((_, index) => <StarIcon key={`star-offset-${index}`} className="opacity-50" size={size} />)}
       {showNumber && (
-        <span className="ml-2">
+        <span className="ml-2" data-testid="rating-text">
           Rating: {rating}
         </span>
       )}

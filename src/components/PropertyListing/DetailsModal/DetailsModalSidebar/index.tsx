@@ -54,7 +54,7 @@ export const DetailsModalSidebar = ({
   }
 
   return (
-    <div className="w-full md:w-[400px] lg:w-[500px] flex flex-col gap-3">
+    <div className="w-full md:w-[400px] lg:w-[500px] flex flex-col gap-3" data-testid="details-modal-sidebar">
       <SidebarItem>
         <h3 className="flex gap-2 items-center border-b pb-2"><CalendarFold size={18} /> Select your dates</h3>
         <Calendar

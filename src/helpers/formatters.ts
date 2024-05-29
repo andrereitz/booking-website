@@ -2,15 +2,6 @@ export function formatCurrency(value: number): string {
   return `$${value.toFixed(2)}`;
 }
 
-export function getUTCdate(date: string): string {
-  const nDate = new Date(date);
-  const year = nDate.getFullYear()
-  const month = nDate.getMonth()
-  const day = nDate.getDate()
-
-  return new Date(Date.UTC(year, month, day, 0, 0, 0)).toISOString()
-}
-
 /**
  * Send base dates to database instead of UTC in ISO 8601
  * to avoid offset problems in multiple timezones.
