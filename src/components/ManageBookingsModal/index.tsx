@@ -1,13 +1,13 @@
-import { useBooking } from "@/hooks/useBookingContext";
-import { ManageBookingsModalHeader } from "./ManageBookingsModalHeader";
-import { PROPERTIES } from "@/data/properties";
-import { ImageCover } from "../shared";
-import { CalendarMinusIcon, CalendarPlusIcon, CircleDollarSignIcon, EditIcon, MapPinIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
-import { ManageBookingsEditDrawer } from "./ManageBookingsEditDrawer";
+import { PROPERTIES } from "@/data/properties";
 import { formatCurrency } from "@/helpers/formatters";
+import { useBooking } from "@/hooks/useBookingContext";
+import { CalendarMinusIcon, CalendarPlusIcon, CircleDollarSignIcon, EditIcon, MapPinIcon, TrashIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { ImageCover } from "../shared";
+import { ManageBookingsEditDrawer } from "./ManageBookingsEditDrawer";
+import { ManageBookingsModalHeader } from "./ManageBookingsModalHeader";
 
 export const ManageBookingsModal = ({
   open,
@@ -22,7 +22,7 @@ export const ManageBookingsModal = ({
   async function deleteBookingAction(id: number) {
     try {
       const result = await deleteBooking(id);
-
+      
       toast(String(result), { type: 'success' })
       
     } catch(err) {
@@ -40,10 +40,10 @@ export const ManageBookingsModal = ({
 
   return(
     <div className="fixed inset-0 bg-white flex flex-col text-slate-800 h-[100vh] z-10">
-      <ManageBookingsModalHeader open={open} onClose={onClose} />
+      <ManageBookingsModalHeader onClose={onClose} />
       <div className="overflow-y-auto pb-4">
         <div className="container flex flex-col gap-4 pt-4 items-center">
-          {bookings.map(booking => {
+          {bookings.map((booking, index) => {
             const property = PROPERTIES.find(property => property.id === booking.property)
             if(!property) return null;
 
@@ -73,7 +73,7 @@ export const ManageBookingsModal = ({
                     </span>
                   </div>
                   <div className="flex justify-end gap-3 mt-auto">
-                    <Button variant="ghost" className="hover:text-red-500" onClick={() => deleteBookingAction(booking.id)}>
+                    <Button variant="ghost" className="hover:text-red-500" onClick={() => deleteBookingAction(booking.id)} data-testid={`delete-button-${index}`}>
                       <TrashIcon />
                     </Button>
                     <Button variant="ghost" onClick={() => setEditBooking(booking.id)}>
@@ -86,7 +86,7 @@ export const ManageBookingsModal = ({
           })}
         </div>
       </div>
-      <ManageBookingsEditDrawer id={editBooking} onClose={() => setEditBooking(false)} />
+      <ManageBookingsEditDrawer id={editBooking} onClose={() => setEditBooking(null)} />
     </div>
   )
 }

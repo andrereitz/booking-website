@@ -1,4 +1,5 @@
 import React from 'react';
+import { vi } from 'vitest';
 
 const useBookingContextMock = React.createContext({
   bookings: [{
@@ -8,8 +9,8 @@ const useBookingContextMock = React.createContext({
     to: '2024-6-7',
     total: 345.46
   }],
-  addBooking: () => true,
-  deleteBooking: () => true,
+  addBooking: vi.fn(),
+  deleteBooking: vi.fn(),
 });
 
 export default useBookingContextMock;

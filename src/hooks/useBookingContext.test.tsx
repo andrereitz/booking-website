@@ -79,4 +79,27 @@ describe('useBooking hook should work correclty', () => {
     expect(result.current.bookings[0].from).toBe('2024-6-4')
     expect(result.current.bookings[0].to).toBe('2024-6-10')
   })
+
+  it('should throw if overlapping updating information is sent', async () => {
+    const wrapper = ({children}: {children: any}) => <BookingContextProvider>{children}</BookingContextProvider>
+    const { result } = renderHook(() => useBooking(), { wrapper });
+
+    result.current.bookings.push({id: 1, property: 1, total: 345, from: '2024-5-30', to: '2024-6-5'})
+    result.current.bookings.push({id: 2, property: 2, total: 200, from: '2024-6-1', to: '2024-6-5'})
+
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    try {
+      const response = await act(async () => {
+        await result.current.updateBooking(1, '2024-6-1', '2024-6-5');
+      });
+  
+      throw response;
+
+    } catch (error) {
+      expect(error).toBe('Your already have a booking in this date');
+    }
+
+    consoleErrorSpy.mockRestore();
+  });
 })

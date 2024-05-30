@@ -19,9 +19,7 @@ export const DetailsModalSidebar = ({
   onClose: () => void
 }) => {
   const [date, setDate] = useState<DateRange | undefined>(undefined)
-  const { addBooking, bookings } = useBooking()
-
-  console.log('### bookings', bookings)
+  const { addBooking } = useBooking()
 
   const duration = useMemo<number | undefined>(() => {
     return getDuration(date?.from, date?.to)
@@ -54,15 +52,17 @@ export const DetailsModalSidebar = ({
 
   return (
     <div className="w-full md:w-[400px] lg:w-[500px] flex flex-col gap-3" data-testid="details-modal-sidebar">
-      <SidebarItem>
+      <SidebarItem className="justify-center">
         <h3 className="flex gap-2 items-center border-b pb-2"><CalendarFold size={18} /> Select your dates</h3>
-        <Calendar
-          mode="range"
-          selected={date}
-          onSelect={setDate}
-          disabled={{ before: new Date()}}
-          className="rounded-md"
-        />
+        <div className="flex justify-center items-center">
+          <Calendar
+            mode="range"
+            selected={date}
+            onSelect={setDate}
+            disabled={{ before: new Date()}}
+            className="w-[275px]"
+          />
+        </div>
         <Button onClick={makeReservation}>
           Make Reservation
         </Button>

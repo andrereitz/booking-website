@@ -21,7 +21,7 @@ export const DetailsModal = ({
     <div className="fixed inset-0 bg-white flex flex-col text-slate-800">
       <DetailsModalHeader title={property.title} onClose={onClose} />
       <div className="overflow-y-auto pb-4">
-        <div className="container flex gap-4 pt-4">
+        <div className="container flex flex-col md:flex-row gap-4 pt-4">
           <div className="w-full">
             <div>
               <AspectRatio ratio={16 / 9}>

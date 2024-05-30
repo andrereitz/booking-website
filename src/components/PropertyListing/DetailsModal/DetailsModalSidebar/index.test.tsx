@@ -15,7 +15,6 @@ vi.mock('@/hooks/useBookingContext', () => ({
       total: 345.46
     }],
     addBooking: () => true,
-    deleteBooking: () => true,
   }))
 }));
 
@@ -25,7 +24,7 @@ describe('renders DetailsModal correctly', () => {
 
     expect(screen.getByTestId('details-modal-sidebar')).toBeInTheDocument();
   })
-  it('should create a reservatoin', () => {
+  it('should create a reservation', () => {
     render(<DetailsModalSidebar id={1} price={100} onClose={() => true} />);
     const { result } = renderHook(() => useBooking());
     const addBookingSpy = vi.spyOn(result.current, 'addBooking');
@@ -45,9 +44,6 @@ describe('renders DetailsModal correctly', () => {
       result.current.addBooking(2, 200, '2024-10-20', '2024-10-25')
     })
 
-    console.log('### current result', result.current.bookings)
-    console.log('### state', mockState)
     expect(addBookingSpy).toHaveBeenCalledTimes(1);
-
   })
 });
