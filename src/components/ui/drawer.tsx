@@ -1,3 +1,5 @@
+/* v8 ignore start */
+
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 

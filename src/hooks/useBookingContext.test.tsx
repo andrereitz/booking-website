@@ -52,5 +52,31 @@ describe('useBooking hook should work correclty', () => {
 
     consoleErrorSpy.mockRestore();
   });
+
+  it('should delete a booking', async () => {
+    const wrapper = ({children}: {children: any}) => <BookingContextProvider>{children}</BookingContextProvider>
+    const { result } = renderHook(() => useBooking(), { wrapper });
+
+    result.current.bookings.push({id: 1, property: 1, total: 345, from: '2024-5-30', to: '2024-6-5'})
+    
+    act(() => {
+      result.current.deleteBooking(1)
+    })
+
+    expect(result.current.bookings.length).toBe(0)
+  })
   
+  it('should update a booking', async () => {
+    const wrapper = ({children}: {children: any}) => <BookingContextProvider>{children}</BookingContextProvider>
+    const { result } = renderHook(() => useBooking(), { wrapper });
+
+    result.current.bookings.push({id: 1, property: 1, total: 345, from: '2024-5-30', to: '2024-6-5'})
+    
+    act(() => {
+      result.current.updateBooking(1, '2024-6-4', '2024-6-10')
+    })
+
+    expect(result.current.bookings[0].from).toBe('2024-6-4')
+    expect(result.current.bookings[0].to).toBe('2024-6-10')
+  })
 })

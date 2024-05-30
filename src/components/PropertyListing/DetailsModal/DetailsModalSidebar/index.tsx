@@ -4,11 +4,10 @@ import { Button } from "@/components/ui/button"
 import { formatCurrency, getBaseDate } from "@/helpers/formatters"
 import { CalendarFold, InfoIcon } from "lucide-react"
 import { useMemo, useState } from "react"
-import { intervalToDuration } from "date-fns"
 import { DateRange } from "react-day-picker"
 import { useBooking } from "@/hooks/useBookingContext"
 import { toast } from "react-toastify"
-import { getServiceFee } from "@/helpers/math"
+import { getDuration, getServiceFee, getTotals } from "@/helpers/math"
 
 export const DetailsModalSidebar = ({
   id,
@@ -25,15 +24,15 @@ export const DetailsModalSidebar = ({
   console.log('### bookings', bookings)
 
   const duration = useMemo<number | undefined>(() => {
-    if(!date || !date.from || !date.to) return undefined;
-
-    return intervalToDuration({ start: new Date(date?.from), end: new Date(date?.to) }).days
+    return getDuration(date?.from, date?.to)
   }, [date])
 
   const total = useMemo<number>(() => {
+    const duration = getDuration(date?.from, date?.to);
+
     if (!duration) return 0;
 
-    return (price * duration) + getServiceFee(price * duration);
+    return getTotals(price, duration)
   }, [date])
 
   async function makeReservation() {

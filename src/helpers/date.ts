@@ -1,4 +1,6 @@
+import { Booking } from '@/types'
 import { addDays, isWithinInterval, subDays } from 'date-fns'
+import { OverlapMatch } from './types'
 
 /**
  * Customer should be able to do a reservation for the same day he is going to check out of another
@@ -15,4 +17,22 @@ export function checkDateInterval(from: string, to: string, currentFrom: string,
   const isToWithinInterval = isWithinInterval(new Date(currentTo), { start: addDays(new Date(from), 1), end: new Date(to) })
 
   return (isFromWithinInterval || isToWithinInterval)
+}
+
+export function checkBookingsDates(bookings: Booking[], from: string, to: string, ignoreID?: number): boolean {
+  const check = bookings.some(booking => {
+    const isOverlapping = checkDateInterval(booking.from, booking.to, from, to)
+
+    if(ignoreID && booking.id === ignoreID) {
+      return false
+    }
+
+    if(isOverlapping) {
+      return true;
+    }
+
+    return false
+  })
+
+  return check;
 }

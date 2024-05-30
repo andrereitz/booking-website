@@ -1,4 +1,6 @@
-import { checkDateInterval } from "@/helpers/date";
+import { PROPERTIES } from "@/data/properties";
+import { checkBookingsDates, checkDateInterval } from "@/helpers/date";
+import { getDuration, getTotals } from "@/helpers/math";
 import { Booking } from "@/types";
 import { Dispatch, PropsWithChildren, SetStateAction, createContext, useContext, useMemo, useState } from "react";
 
@@ -27,13 +29,16 @@ export const useBooking = () => {
       total
     }
 
-    bookings.map(booking => {
-      const isOverlapping = checkDateInterval(booking.from, booking.to, from, to)
+    try {
+      const match = checkBookingsDates(bookings, from, to)
 
-      if(isOverlapping) {
-        throw 'Your already have a booking in this date'
+      if(match) {
+        throw 'Your already have a booking in this date';
       }
-    })
+
+    } catch(err) {
+      throw err;
+    }
 
     setBookings(prev => [...prev, newBooking])
     return 'Property booked sucessfully';
@@ -44,11 +49,52 @@ export const useBooking = () => {
 
     return 'Deleted sucessfully';
   }
+
+  async function updateBooking(id: number, from: string, to: string) {
+    const bookingData = bookings.filter(book => book.id === id)[0];
+    const propertyData = PROPERTIES.filter(prop => prop.id === bookingData.property)[0];
+    const duration = getDuration(new Date(from), new Date(to));
+
+    if(!duration || !propertyData) {
+      throw 'Error getting property data';
+    }
+
+    const newBookingData = {
+      ...bookingData,
+      from: from,
+      to: to,
+      total: getTotals(propertyData.price, duration)
+    }
+
+    try {
+      const match = checkBookingsDates(bookings, from, to, id)
+
+      if(match) {
+        throw 'Your already have a booking in this date';
+      }
+
+    } catch(err) {
+      throw err;
+    }
+
+    setBookings(prev => prev.map(book => {
+        if(book.id === id) {
+          book.from = newBookingData.from,
+          book.to = newBookingData.to,
+          book.total = newBookingData.total
+        }
+
+        return book
+    }))
+
+    return 'Updated sucessfully';
+  }
   
   return {
     bookings,
     addBooking,
     deleteBooking,
+    updateBooking
   }
 }
 

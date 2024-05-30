@@ -20,6 +20,7 @@ describe('DetailsModalHeader renders correctly', () => {
       ],
       addBooking: vi.fn(),
       deleteBooking: vi.fn(),
+      updateBooking: vi.fn(),
     })
 
     const mockManage = vi.fn();
@@ -53,6 +54,7 @@ describe('DetailsModalHeader renders correctly', () => {
       ],
       addBooking: vi.fn(),
       deleteBooking: vi.fn(),
+      updateBooking: vi.fn(),
     })
 
     render(<BookingIndicator onManage={ vi.fn() } />);
@@ -65,6 +67,7 @@ describe('DetailsModalHeader renders correctly', () => {
       bookings: [],
       addBooking: vi.fn(),
       deleteBooking: vi.fn(),
+      updateBooking: vi.fn(),
     })
 
     render(<BookingIndicator onManage={ vi.fn() } />);

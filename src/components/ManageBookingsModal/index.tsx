@@ -2,11 +2,12 @@ import { useBooking } from "@/hooks/useBookingContext";
 import { ManageBookingsModalHeader } from "./ManageBookingsModalHeader";
 import { PROPERTIES } from "@/data/properties";
 import { ImageCover } from "../shared";
-import { CalendarMinusIcon, CalendarPlusIcon, EditIcon, MapPinIcon, TrashIcon } from "lucide-react";
+import { CalendarMinusIcon, CalendarPlusIcon, CircleDollarSignIcon, EditIcon, MapPinIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { ManageBookingsEditDrawer } from "./ManageBookingsEditDrawer";
+import { formatCurrency } from "@/helpers/formatters";
 
 export const ManageBookingsModal = ({
   open,
@@ -58,6 +59,10 @@ export const ManageBookingsModal = ({
                   <h2 className="text-lg font-bold">{property.title}</h2>
                   <h3 className="flex gap-2 items-center"><MapPinIcon size={18} />{property.tagline}</h3>
                   <div className="bg-slate-100 p-3 mt-3 rounded-md flex gap-4 justify-around">
+                    <span className="flex gap-2 items-center">
+                      <CircleDollarSignIcon size={18} />
+                      {formatCurrency(booking.total)}
+                    </span>
                     <span className="flex gap-2 items-center">
                       <CalendarPlusIcon size={18} />
                       {new Intl.DateTimeFormat('en-US').format(from)}
