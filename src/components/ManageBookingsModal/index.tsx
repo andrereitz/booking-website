@@ -72,11 +72,11 @@ export const ManageBookingsModal = ({
                       {new Intl.DateTimeFormat('en-US').format(to)}
                     </span>
                   </div>
-                  <div className="flex justify-end gap-3 mt-auto">
+                  <div className="flex justify-end gap-3 mt-auto" data-testid="actions">
                     <Button variant="ghost" className="hover:text-red-500" onClick={() => deleteBookingAction(booking.id)} data-testid={`delete-button-${index}`}>
                       <TrashIcon />
                     </Button>
-                    <Button variant="ghost" onClick={() => setEditBooking(booking.id)}>
+                    <Button variant="ghost" onClick={() => setEditBooking(booking.id)} data-testid={`edit-button-${index}`}>
                       <EditIcon />
                     </Button>
                   </div>

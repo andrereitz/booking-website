@@ -77,10 +77,6 @@ describe('renders DetailsModal correctly', () => {
 
     expect(screen.getByText('$100.00 X 2 night(s) = $200.00')).toBeInTheDocument()
     expect(screen.getByText('Service fee: $30.00')).toBeInTheDocument()
-    expect(screen.getByText('Total: $230.00')).toBeInTheDocument()
-
-    screen.debug(undefined, 100000)
-    
-    // expect(result.current.addBooking).toHaveBeenCalled()
+    expect(screen.getByText('Total: $230.00')).toBeInTheDocument()  
   })
 });

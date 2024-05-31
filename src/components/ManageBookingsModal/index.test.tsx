@@ -34,6 +34,17 @@ describe('ManageBookingsModal should render correctly', () => {
     expect(screen.getByText('6/7/2024')).toBeInTheDocument()
   })
 
+  it('should open edit drawer', async () => {
+    render(<ManageBookingsModal open={true} onClose={ vi.fn() } />);
+    const editButton = screen.getByTestId('edit-button-0');
+    
+    act(() => {
+      fireEvent.click(editButton)
+    })
+    
+    expect(screen.getByText('Edit booking')).toBeInTheDocument()
+  })
+
   it('should call deleteBooking', async () => {
     render(<ManageBookingsModal open={true} onClose={ vi.fn() } />);
     const { result } = renderHook(() => useBooking());

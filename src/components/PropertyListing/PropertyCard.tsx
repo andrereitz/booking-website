@@ -11,7 +11,7 @@ export const PropertyCard = ({
   onClick: () => void,
 }) => {
   return(
-    <div key={data.id} className='flex flex-col' onClick={onClick} data-testid="property-card">
+    <div className='flex flex-col' onClick={onClick} data-testid="property-card">
       <AspectRatio ratio={16 / 9}>
         <ImageCover url={`/images/${data.images[0]}`} />
       </AspectRatio>

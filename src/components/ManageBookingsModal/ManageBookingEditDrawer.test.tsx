@@ -32,6 +32,7 @@ describe('ManageBookingsEditDrawer should render correctly', () => {
     
     expect(screen.getByText('Edit booking')).toBeInTheDocument()
   })
+
   it('should close', async () => {
     const closeMock = vi.fn()
     render(<ManageBookingsEditDrawer id={111} onClose={ closeMock } />)
@@ -41,23 +42,16 @@ describe('ManageBookingsEditDrawer should render correctly', () => {
     fireEvent.click(btn)
     expect(closeMock).toHaveBeenCalled()
   })
+
   it('should update', async () => {
     render(<ManageBookingsEditDrawer id={111} onClose={ vi.fn() } />)
     const { result } = renderHook(() => useBooking());
     const updateBookingSpy = vi.spyOn(result.current, 'updateBooking');
 
-    const setDate = vi.fn();
-    const date = {
-      from: '2024-5-31',
-      to: '2024-6-5'
-    };
-
-    vi.spyOn(React, 'useState').mockImplementation(() => [date, setDate]);
-
     const btn = screen.getByText('Submit');
     act(() => {
       fireEvent.click(btn)
-      result.current.updateBooking(111, date.from, date.to)
+      result.current.updateBooking(111, '2024-5-31', '2024-6-5')
     })
 
     await waitFor(() => {
