@@ -7,7 +7,8 @@ import { useMemo, useState } from "react"
 import { DateRange } from "react-day-picker"
 import { useBooking } from "@/hooks/useBookingContext"
 import { toast } from "react-toastify"
-import { getDuration, getServiceFee, getTotals } from "@/helpers/math"
+import { getDuration, getTotals } from "@/helpers/math"
+import { DetailsModalBookingInfo } from "./DetailsModalBookingInfo"
 
 export const DetailsModalSidebar = ({
   id,
@@ -72,19 +73,7 @@ export const DetailsModalSidebar = ({
         <span className="font-bold">
           {formatCurrency(price)} night
         </span>
-        {duration && (
-          <>
-            <span>
-              {formatCurrency(price)} X {duration} night(s) = {formatCurrency(price * duration)}
-            </span>
-            <span>
-              Service fee: {formatCurrency(getServiceFee(price * duration))}
-            </span>
-            <span className="border-t pt-1 mt-1">
-              Total: {formatCurrency(total)}
-            </span>
-          </>
-        )}
+        <DetailsModalBookingInfo duration={duration} total={total} price={price} />
       </SidebarItem>
     </div>
   )

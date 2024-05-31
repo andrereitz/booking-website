@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/drawer"
 import { useEffect, useState } from "react"
 import { DateRange } from "react-day-picker"
-import { PROPERTIES } from "@/data/properties"
 import { useBooking } from "@/hooks/useBookingContext"
 import { getBaseDate } from "@/helpers/formatters"
 import { toast } from "react-toastify"

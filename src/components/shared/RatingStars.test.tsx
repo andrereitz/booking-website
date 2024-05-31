@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { RatingStars } from "./RatingStars"
 
-
 describe('RatingStarts should render correctly', () => {
   it('should render the component with the correct number of stars', () => {
     const { container } = render(<RatingStars rating={2} />)

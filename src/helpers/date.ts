@@ -1,6 +1,5 @@
 import { Booking } from '@/types'
 import { addDays, isWithinInterval, subDays } from 'date-fns'
-import { OverlapMatch } from './types'
 
 /**
  * Customer should be able to do a reservation for the same day he is going to check out of another

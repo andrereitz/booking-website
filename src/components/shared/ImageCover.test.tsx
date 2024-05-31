@@ -1,7 +1,6 @@
 import { render } from "@testing-library/react"
 import { ImageCover } from "./ImageCover"
 
-
 describe('ImageCover should render correctly', () => {
   it('should render the component with the correct src', () => {
     const { container } = render(<ImageCover url='testurl.com/image.jpg' />)

@@ -62,7 +62,6 @@ describe('ManageBookingsEditDrawer should render correctly', () => {
 
     await waitFor(() => {
       expect(updateBookingSpy).toHaveBeenCalled()
-      console.log(result.current)
     })
   })
 })

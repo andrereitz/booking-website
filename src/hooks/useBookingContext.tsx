@@ -1,5 +1,5 @@
 import { PROPERTIES } from "@/data/properties";
-import { checkBookingsDates, checkDateInterval } from "@/helpers/date";
+import { checkBookingsDates } from "@/helpers/date";
 import { getDuration, getTotals } from "@/helpers/math";
 import { Booking } from "@/types";
 import { Dispatch, PropsWithChildren, SetStateAction, createContext, useContext, useMemo, useState } from "react";
