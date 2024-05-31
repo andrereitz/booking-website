@@ -1,6 +1,6 @@
 # React + TypeScript + Vite
 
-This repository uses react with vite and typescript.
+This repository uses React with Vite and Typescript.
 
 A simple POC for a booking website with CRUD simulations in memory.
 
