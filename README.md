@@ -2,7 +2,9 @@
 
 This repository uses react with vite and typescript.
 
-A simple POC for a booking website with CRUD simulations in memory
+A simple POC for a booking website with CRUD simulations in memory.
+
+Main libraries used: Shadcn, Tailwind, Vitest, React Testing Library, Date-fns.
 
 ## How to run
 
@@ -28,3 +30,6 @@ To run coverage use:
 ```js
 npm run coverage
 ```
+
+Coverage data:
+![image info](/public/coverage.png)
