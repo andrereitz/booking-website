@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { ImageCover } from "../shared";
 import { ManageBookingsEditDrawer } from "./ManageBookingsEditDrawer";
 import { ManageBookingsModalHeader } from "./ManageBookingsModalHeader";
+import { AspectRatio } from "../ui/aspect-ratio";
 
 export const ManageBookingsModal = ({
   open,
@@ -53,7 +54,9 @@ export const ManageBookingsModal = ({
             return (
               <div key={booking.id} className="flex flex-wrap sm:flex-nowrap items-start rounded-md border border-slate-200 w-full max-w-[800px]">
                 <div className="w-full sm:w-[300px] sm:flex-shrink-0">
-                  <ImageCover url={`images/${property.images[0]}`} />
+                  <AspectRatio ratio={16 / 10}>
+                    <ImageCover url={`images/${property.images[0]}`} />
+                  </AspectRatio>
                 </div>
                 <div className="p-3 text-slate-700 flex-shrink flex flex-col self-stretch w-full">
                   <h2 className="text-lg font-bold">{property.title}</h2>
