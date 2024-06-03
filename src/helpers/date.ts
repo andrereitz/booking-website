@@ -12,9 +12,6 @@ import { addDays, eachDayOfInterval, isSameDay, isWithinInterval, subDays } from
  * @returns {boolean} True if overlaps, false if not
  */
 export function checkDateInterval(from: string, to: string, currentFrom: string, currentTo: string): boolean{
-  const isFromWithinInterval = isWithinInterval(new Date(currentFrom), { start: new Date(from), end: subDays(new Date(to), 1) })
-  const isToWithinInterval = isWithinInterval(new Date(currentTo), { start: addDays(new Date(from), 1), end: new Date(to) })
-
   const eachDay = eachDayOfInterval( {start: new Date(from), end:  new Date(to)} )
   const eachDayCurrent = eachDayOfInterval( {start: new Date(currentFrom), end:  new Date(currentTo)} )
   let eachOverlap = false
@@ -30,9 +27,7 @@ export function checkDateInterval(from: string, to: string, currentFrom: string,
     })
   })
 
-  if(isToWithinInterval) return true
-
-  return (isFromWithinInterval || isToWithinInterval || eachOverlap)
+  return eachOverlap;
 }
 
 export function checkBookingsDates(bookings: Booking[], from: string, to: string, ignoreID?: number): boolean {
