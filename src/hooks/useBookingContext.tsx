@@ -19,8 +19,6 @@ export const useBooking = () => {
   const [bookings, setBookings] = context;
 
   async function addBooking(propertyID: number, total: number, from: string, to: string): Promise<unknown> {
-    console.log(propertyID, from, to)
-
     const newBooking: Booking = {
       id: new Date().getTime(),
       property: propertyID,

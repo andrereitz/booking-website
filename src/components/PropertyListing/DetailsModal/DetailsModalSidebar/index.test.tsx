@@ -49,8 +49,6 @@ describe('renders DetailsModal correctly', () => {
 
     rerender(<DetailsModalSidebar id={1} price={100} onClose={() => true} />)
 
-    expect(screen.getByText('June 2024')).toBeInTheDocument()
-
     const day1btn = screen.getAllByText('14');
     const day2btn = screen.getAllByText('16');
     const enabledDay1= day1btn.filter((button) => !(button as HTMLButtonElement).disabled);

@@ -9,6 +9,7 @@ import { ImageCover } from "../shared";
 import { ManageBookingsEditDrawer } from "./ManageBookingsEditDrawer";
 import { ManageBookingsModalHeader } from "./ManageBookingsModalHeader";
 import { AspectRatio } from "../ui/aspect-ratio";
+import { ManageBookingsDeleteConfirmation } from "./ManageBookingsDeleteConfirmation";
 
 export const ManageBookingsModal = ({
   open,
@@ -19,6 +20,7 @@ export const ManageBookingsModal = ({
 }) => {
   const { bookings, deleteBooking } = useBooking();
   const [editBooking, setEditBooking] = useState<number | null>(null)
+  const [deletingId, setDeletingId] = useState<number | undefined>(undefined)
 
   async function deleteBookingAction(id: number) {
     try {
@@ -28,6 +30,8 @@ export const ManageBookingsModal = ({
       
     } catch(err) {
       toast(String(err), { type: 'error' })
+    } finally {
+      setDeletingId(undefined)
     }
   }
 
@@ -76,7 +80,12 @@ export const ManageBookingsModal = ({
                     </span>
                   </div>
                   <div className="flex justify-end gap-3 mt-auto" data-testid="actions">
-                    <Button variant="ghost" className="hover:text-red-500" onClick={() => deleteBookingAction(booking.id)} data-testid={`delete-button-${index}`}>
+                    <Button 
+                      variant="ghost" 
+                      className="hover:text-red-500" 
+                      onClick={() => setDeletingId(booking.id)} 
+                      data-testid={`delete-button-${index}`}
+                    >
                       <TrashIcon />
                     </Button>
                     <Button variant="ghost" onClick={() => setEditBooking(booking.id)} data-testid={`edit-button-${index}`}>
@@ -87,6 +96,11 @@ export const ManageBookingsModal = ({
               </div>
             )
           })}
+            <ManageBookingsDeleteConfirmation 
+              id={deletingId} 
+              onClose={() => setDeletingId(undefined)} 
+              onConfirm={() => deletingId && deleteBookingAction(deletingId)}
+            />
         </div>
       </div>
       <ManageBookingsEditDrawer id={editBooking} onClose={() => setEditBooking(null)} />

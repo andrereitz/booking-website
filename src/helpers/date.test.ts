@@ -21,6 +21,12 @@ describe('checkDateInterval helper works correctly', () => {
 
     expect(result).toBe(false)
   })
+  it('Should return true when although individual dates does not match range, it overlap the entire range', () => {
+    const result = checkDateInterval('2024-6-5', '2024-6-6', '2024-6-4', '2024-6-7')
+
+    expect(result).toBe(true)
+  })
+  
 })
 
 describe('checkBookingsDates helper works correctly', () => {

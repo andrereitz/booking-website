@@ -1,5 +1,5 @@
 import { vi } from "vitest";
-import { act, fireEvent, render, renderHook, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ManageBookingsModal } from ".";
 import { useBooking } from "@/hooks/useBookingContext";
 
@@ -15,7 +15,7 @@ vi.mock('@/hooks/useBookingContext', () => ({
       },
       {
         id: 222,
-        property: 1,
+        property: 2,
         from: '2024-6-8',
         to: '2024-6-15',
         total: 200
@@ -34,33 +34,62 @@ describe('ManageBookingsModal should render correctly', () => {
     expect(screen.getByText('6/7/2024')).toBeInTheDocument()
   })
 
-  it('should open edit drawer', async () => {
+  it('should open and close edit drawer', async () => {
     render(<ManageBookingsModal open={true} onClose={ vi.fn() } />);
+
     const editButton = screen.getByTestId('edit-button-0');
-    
     act(() => {
       fireEvent.click(editButton)
     })
     
-    expect(screen.getByText('Edit booking')).toBeInTheDocument()
+    expect(screen.getByText('Edit booking')).toBeInTheDocument();
+
+    const cancelButton = screen.getByText('Cancel')
+    act(() => {
+      fireEvent.click(cancelButton)
+    })    
   })
 
-  it('should call deleteBooking', async () => {
+  it('should cancel delete action', async () => {
     render(<ManageBookingsModal open={true} onClose={ vi.fn() } />);
-    const { result } = renderHook(() => useBooking());
-    const deleteBookingSpy = vi.spyOn(result.current, 'deleteBooking');
-    const { bookings } = result.current;
 
-    const deleteButton = screen.getByTestId('delete-button-1');
+    const deleteButton = screen.getByTestId('delete-button-0');
     act(() => {
       fireEvent.click(deleteButton);
-      result.current.deleteBooking(111)
     })
+
+    const confirmationDialog = screen.getByText('Are you sure?')
+    expect(confirmationDialog).toBeInTheDocument()
     
+    const cancelBtn = screen.getByTestId('delete-cancel');
+    act(() => {
+      fireEvent.click(cancelBtn);
+    })
+
+    expect(confirmationDialog).not.toBeInTheDocument()
+  })
+
+  it('should confirm delete action', async () => {
+    const { rerender } = render(<ManageBookingsModal open={true} onClose={ vi.fn() } />);
+
+    const deleteButton = screen.getByTestId('delete-button-0');
+    act(() => {
+      fireEvent.click(deleteButton);
+    })
+
+    const confirmBtn = screen.getByTestId('delete-confirm');
+    act(() => {
+      fireEvent.click(confirmBtn);
+    })
+
+    const confirmationDialog = screen.getByText('Are you sure?')
+    expect(confirmationDialog).toBeInTheDocument()
+    
+    rerender(<ManageBookingsModal open={true} onClose={ vi.fn() } />)
+
     await waitFor(() => {
-      expect(deleteBookingSpy).toHaveBeenCalled();
-      expect(deleteBookingSpy).toHaveBeenCalledWith(bookings[0].id);
-    });
+      expect(confirmationDialog).not.toBeInTheDocument()
+    }, { interval: 100 })
   })
 
   it('should close if no items', async () => {
